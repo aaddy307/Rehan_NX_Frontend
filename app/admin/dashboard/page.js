@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import DashboardCard from '@/components/admin/DashboardCard'
 import { Package, Layers, MessageSquare, Star } from 'lucide-react'
-import { getProducts, getCategories } from '@/services/api'
+import { getProducts, getCategories, getInquiries } from '@/services/api'
 import { useAuthStore } from '@/store/authStore'
 
 export default function DashboardPage() {
@@ -17,18 +17,34 @@ export default function DashboardPage() {
     const fetchStats = async () => {
       try {
         setLoading(true)
-        const [productsRes, categoriesRes] = await Promise.all([
+        const [productsRes, categoriesRes, inquiriesRes] = await Promise.all([
           getProducts({ limit: 100 }),
           getCategories(),
+          getInquiries({ limit: 1 }),
         ])
         setStats({
-          products: productsRes.data.pagination?.total || 0,
+          products: productsRes.data.pagination?.total || productsRes.data.products?.length || 0,
           categories: categoriesRes.data.categories?.length || 0,
-          inquiries: 0,
-          featured: productsRes.data.products.filter((p) => p.featured).length,
+          inquiries: inquiriesRes.data.pagination?.total || 0,
+          featured: productsRes.data.products?.filter((p) => p.featured).length || 0,
         })
       } catch (error) {
         console.error('Error fetching stats:', error)
+        // Fallback without inquiries
+        try {
+          const [productsRes, categoriesRes] = await Promise.all([
+            getProducts({ limit: 100 }),
+            getCategories(),
+          ])
+          setStats({
+            products: productsRes.data.pagination?.total || productsRes.data.products?.length || 0,
+            categories: categoriesRes.data.categories?.length || 0,
+            inquiries: 0,
+            featured: productsRes.data.products?.filter((p) => p.featured).length || 0,
+          })
+        } catch (err) {
+          console.error('Fallback stats error:', err)
+        }
       } finally {
         setLoading(false)
       }

@@ -1,38 +1,68 @@
 'use client'
 
-import { useFilterStore } from '@/store/filterStore'
+import { useEffect } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useCategories } from '@/hooks/useCategories'
 import { useBrands } from '@/hooks/useBrands'
 import { Search, X } from 'lucide-react'
 import { Input } from '@/components/ui/Input'
 import { Select } from '@/components/ui/Select'
+import { Button } from '@/components/ui/Button'
 
-export default function ProductFilters({ onFilterChange }) {
-  const { search, category, brand, sort, resetFilters } = useFilterStore()
+export default function ProductFilters() {
+  const router = useRouter()
+  const searchParams = useSearchParams()
   const { categories } = useCategories()
   const { brands } = useBrands()
 
+  const search = searchParams.get('search') || ''
+  const category = searchParams.get('category') || ''
+  const brand = searchParams.get('brand') || ''
+  const sort = searchParams.get('sort') || 'newest'
+
+  const updateFilter = (key, value) => {
+    const params = new URLSearchParams(searchParams.toString())
+    if (value) {
+      params.set(key, value)
+    } else {
+      params.delete(key)
+    }
+    params.delete('page') // Reset to page 1 when filtering
+    router.push(`/products?${params.toString()}`)
+  }
+
   const handleSearch = (e) => {
-    useFilterStore.getState().setFilter('search', e.target.value)
+    updateFilter('search', e.target.value)
   }
 
   const handleCategoryChange = (e) => {
-    useFilterStore.getState().setFilter('category', e.target.value)
+    updateFilter('category', e.target.value)
   }
 
   const handleBrandChange = (e) => {
-    useFilterStore.getState().setFilter('brand', e.target.value)
+    updateFilter('brand', e.target.value)
   }
 
   const handleSortChange = (e) => {
-    useFilterStore.getState().setFilter('sort', e.target.value)
+    updateFilter('sort', e.target.value)
   }
+
+  const clearFilters = () => {
+    router.push('/products')
+  }
+
+  const hasFilters = search || category || brand
 
   return (
     <div className="space-y-4">
       <div className="relative">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-        <Input placeholder="Search products..." value={search} onChange={handleSearch} className="pl-10" />
+        <Input 
+          placeholder="Search products..." 
+          value={search} 
+          onChange={handleSearch}
+          className="pl-10" 
+        />
       </div>
 
       <div>
@@ -65,11 +95,11 @@ export default function ProductFilters({ onFilterChange }) {
         </Select>
       </div>
 
-      {(search || category || brand) && (
-        <button onClick={resetFilters} className="flex items-center gap-2 text-accent hover:underline text-sm">
-          <X className="w-4 h-4" />
+      {hasFilters && (
+        <Button variant="outline" onClick={clearFilters} className="w-full">
+          <X className="w-4 h-4 mr-2" />
           Clear Filters
-        </button>
+        </Button>
       )}
     </div>
   )
