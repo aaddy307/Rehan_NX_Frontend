@@ -9,7 +9,7 @@ export default function HeroSection() {
   const whatsappNumber = settings?.whatsapp?.replace(/\D/g, '') || '919876543210'
 
   return (
-    <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden bg-[#1a1a2e]">
+    <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-[#1a1a2e] pt-16 lg:pt-20">
       {/* Animated Gradient Background */}
       <div className="absolute inset-0">
         <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-[#e94560]/15 rounded-full blur-[150px] animate-pulse" />
