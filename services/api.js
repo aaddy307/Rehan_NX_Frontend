@@ -20,11 +20,6 @@ export const createCategory = (data) => api.post('/categories', data)
 export const updateCategory = (id, data) => api.put(`/categories/${id}`, data)
 export const deleteCategory = (id) => api.delete(`/categories/${id}`)
 
-export const getBanners = () => api.get('/banners')
-export const createBanner = (data) => api.post('/banners', data)
-export const updateBanner = (id, data) => api.put(`/banners/${id}`, data)
-export const deleteBanner = (id) => api.delete(`/banners/${id}`)
-
 export const submitInquiry = (data) => api.post('/inquiries', data)
 export const getInquiries = (params) => api.get('/inquiries', { params })
 export const deleteInquiry = (id) => api.delete(`/inquiries/${id}`)
