@@ -62,7 +62,6 @@ export default function HeroSection() {
         {/* Trust Indicators */}
         <div className="mt-16 flex flex-wrap justify-center gap-10">
           {[
-            { label: '100% Genuine', num: '1K+' },
             { label: 'Happy Customers', num: '10K+' },
             { label: 'Products', num: '500+' },
             { label: 'Brands', num: '50+' },

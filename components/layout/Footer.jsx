@@ -112,10 +112,10 @@ export default function Footer() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <p className="text-gray-400 text-sm text-center sm:text-left">
-              © {new Date().getFullYear()} Rehan NX Mobiles. All rights reserved.
+              © {new Date().getFullYear()} Ahmed khan. All rights reserved.
             </p>
             <p className="text-gray-500 text-sm flex items-center gap-1">
-              Made with <Heart className="w-4 h-4 text-red-500 animate-pulse" /> by <span className="text-accent font-medium">Ahmed Khan</span>
+              Made by <span className="text-accent font-medium">Ahmed Khan</span>
             </p>
           </div>
         </div>
