@@ -9,7 +9,7 @@ import { WHATSAPP_BASE } from '@/utils/constants'
 export default function Footer() {
   const { settings } = useSettingsStore()
   const { categories } = useCategories()
-  const whatsappNumber = settings?.whatsapp?.replace(/\D/g, '') || '923001234567'
+  const whatsappNumber = settings?.whatsapp?.replace(/\D/g, '') || '919876543210'
   const whatsappLink = `${WHATSAPP_BASE}${whatsappNumber}`
 
   return (
@@ -28,7 +28,7 @@ export default function Footer() {
                 <p className="text-gray-400 text-sm">Mobiles</p>
               </div>
             </Link>
-            <p className="text-gray-400 mb-6">Your trusted destination for genuine smartphones and accessories. Best prices guaranteed!</p>
+            <p className="text-gray-400 mb-6">Your trusted destination for genuine smartphones and accessories in India. Best prices guaranteed!</p>
             <div className="flex gap-3">
               {settings?.facebook && (
                 <a href={settings.facebook} target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center hover:bg-blue-600 transition-all duration-300 hover:-translate-y-1">

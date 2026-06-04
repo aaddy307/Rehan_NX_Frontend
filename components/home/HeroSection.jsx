@@ -8,13 +8,13 @@ import { useSettingsStore } from '@/store/settingsStore'
 const features = [
   { icon: Shield, label: '100% Genuine', desc: 'Authentic Products' },
   { icon: CreditCard, label: 'Easy EMI', desc: 'Flexible Payments' },
-  { icon: Truck, label: 'Fast Delivery', desc: 'Across Pakistan' },
+  { icon: Truck, label: 'Fast Delivery', desc: 'Across India' },
   { icon: Headphones, label: '24/7 Support', desc: 'Always Available' },
 ]
 
 export default function HeroSection() {
   const { settings } = useSettingsStore()
-  const whatsappNumber = settings?.whatsapp?.replace(/\D/g, '') || '923001234567'
+  const whatsappNumber = settings?.whatsapp?.replace(/\D/g, '') || '919876543210'
   const whatsappLink = `${WHATSAPP_BASE}${whatsappNumber}?text=${encodeURIComponent('Hi, I want to know about your latest phone offers!')}`
 
   return (
@@ -48,14 +48,14 @@ export default function HeroSection() {
             </h1>
 
             <p className="text-lg text-gray-400 mb-8 max-w-xl mx-auto lg:mx-0">
-              Pakistan's trusted mobile store. Explore latest smartphones, best deals, and easy EMI options. 
+              India's trusted mobile store. Explore latest smartphones, best deals, and easy EMI options. 
               <span className="text-accent font-medium"> Shop with confidence.</span>
             </p>
 
             {/* Price Tag */}
             <div className="inline-flex items-center gap-3 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl px-5 py-3 mb-8">
               <span className="text-gray-400 text-sm">Starting from</span>
-              <span className="text-2xl font-bold text-white">PKR 25,000</span>
+              <span className="text-2xl font-bold text-white">₹8,999</span>
             </div>
 
             {/* CTA Buttons */}
@@ -119,7 +119,7 @@ export default function HeroSection() {
               
               <div className="absolute -bottom-4 -left-4 bg-white text-gray-900 px-4 py-2 rounded-xl shadow-lg">
                 <span className="text-sm text-gray-500">Hot Deal</span>
-                <p className="font-bold">20% OFF</p>
+                <p className="font-bold">₹2,000 OFF</p>
               </div>
             </div>
           </div>
@@ -140,7 +140,7 @@ export default function HeroSection() {
             <p className="text-gray-400 text-sm">Happy Customers</p>
           </div>
           <div>
-            <p className="text-3xl sm:text-4xl font-bold text-white">5★</p>
+            <p className="text-3xl sm:text-4xl font-bold text-white">4.8★</p>
             <p className="text-gray-400 text-sm">Rating</p>
           </div>
         </div>
