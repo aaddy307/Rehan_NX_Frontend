@@ -16,6 +16,10 @@ export default function LoginPage() {
   const [formData, setFormData] = useState({ email: '', password: '' })
 
   useEffect(() => {
+    checkAuth()
+  }, [checkAuth])
+
+  useEffect(() => {
     if (!isLoading && isAuthenticated) {
       router.push('/admin/dashboard')
     }
@@ -30,14 +34,11 @@ export default function LoginPage() {
     setLoading(true)
 
     const result = await login(formData)
-    if (result.success) {
-      toast.success('Login successful')
-      await checkAuth()
-      router.push('/admin/dashboard')
-    } else {
+    if (!result.success) {
       toast.error(result.message)
+      setLoading(false)
     }
-    setLoading(false)
+    // Note: login() in store handles redirect via window.location.href
   }
 
   return (
@@ -54,18 +55,39 @@ export default function LoginPage() {
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-            <Input type="email" name="email" value={formData.email} onChange={handleChange} required placeholder="admin@example.com" />
+            <Input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              placeholder="admin@example.com"
+            />
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
             <div className="relative">
-              <Input type={showPassword ? 'text' : 'password'} name="password" value={formData.password} onChange={handleChange} required placeholder="Enter password" className="pr-10" />
-              <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
+              <Input
+                type={showPassword ? 'text' : 'password'}
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+                placeholder="Enter password"
+                className="pr-10"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"
+              >
                 {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
               </button>
             </div>
           </div>
-          <Button type="submit" loading={loading} className="w-full">Sign In</Button>
+          <Button type="submit" loading={loading} className="w-full">
+            Sign In
+          </Button>
         </form>
       </div>
     </div>

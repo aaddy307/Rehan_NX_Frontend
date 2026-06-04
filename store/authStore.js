@@ -10,6 +10,8 @@ export const useAuthStore = create((set) => ({
     try {
       const response = await loginApi(credentials)
       set({ admin: response.data.admin, isAuthenticated: true })
+      // Force hard reload to ensure cookie is set and state is fresh
+      window.location.href = '/admin/dashboard'
       return { success: true }
     } catch (error) {
       return {
@@ -26,6 +28,7 @@ export const useAuthStore = create((set) => ({
       console.error('Logout error:', error)
     }
     set({ admin: null, isAuthenticated: false })
+    window.location.href = '/admin/login'
   },
 
   checkAuth: async () => {

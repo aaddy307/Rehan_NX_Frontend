@@ -3,6 +3,7 @@
 import { useEffect } from 'react'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
+import InquiryForm from '@/components/InquiryForm'
 import { MapPin, Phone, Mail, MessageCircle, Facebook, Instagram } from 'lucide-react'
 import { useSettingsStore } from '@/store/settingsStore'
 import { WHATSAPP_BASE } from '@/utils/constants'
@@ -27,6 +28,8 @@ export default function ContactPage() {
 
           <div className="grid lg:grid-cols-2 gap-8">
             <div className="space-y-6">
+              <InquiryForm />
+
               <div className="bg-white rounded-xl p-6 shadow-sm">
                 <h2 className="font-semibold text-lg mb-6">Store Information</h2>
                 <div className="space-y-6">
@@ -50,7 +53,7 @@ export default function ContactPage() {
                       <div>
                         <p className="font-medium text-gray-700 mb-1">Phone</p>
                         <a href={`tel:${settings.phone1}`} className="text-gray-600 hover:text-accent">{settings.phone1}</a>
-                        {settings.phone2 && <p className="text-gray-600 hover:text-accent">{settings.phone2}</p>}
+                        {settings.phone2 && <p className="text-gray-600">{settings.phone2}</p>}
                       </div>
                     </div>
                   )}
@@ -69,6 +72,15 @@ export default function ContactPage() {
                       <div>
                         <p className="font-medium text-gray-700 mb-1">Email</p>
                         <a href={`mailto:${settings.email}`} className="text-gray-600 hover:text-accent">{settings.email}</a>
+                      </div>
+                    </div>
+                  )}
+                  {settings?.workingHours && (
+                    <div className="flex gap-3">
+                      <Phone className="w-5 h-5 text-accent mt-1 flex-shrink-0" />
+                      <div>
+                        <p className="font-medium text-gray-700 mb-1">Working Hours</p>
+                        <p className="text-gray-600 text-sm">{settings.workingHours}</p>
                       </div>
                     </div>
                   )}

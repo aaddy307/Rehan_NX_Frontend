@@ -7,12 +7,12 @@ import ConfirmDialog from '@/components/shared/ConfirmDialog'
 import LoadingSkeleton from '@/components/shared/LoadingSkeleton'
 import { Trash2, Phone, User, MessageSquare } from 'lucide-react'
 import { toast } from 'sonner'
-import { format } from '@/lib/utils'
 
 export default function InquiriesPage() {
   const { isAuthenticated } = useAuthStore()
   const [inquiries, setInquiries] = useState([])
   const [loading, setLoading] = useState(false)
+  const [deleteId, setDeleteId] = useState(null)
 
   useEffect(() => {
     if (!isAuthenticated) return
@@ -21,9 +21,10 @@ export default function InquiriesPage() {
       try {
         setLoading(true)
         const response = await getInquiries()
-        setInquiries(response.data.inquiries)
+        setInquiries(response.data.inquiries || [])
       } catch (error) {
         console.error('Failed to load inquiries:', error)
+        toast.error('Failed to load inquiries')
       } finally {
         setLoading(false)
       }
@@ -32,17 +33,18 @@ export default function InquiriesPage() {
   }, [isAuthenticated])
 
   const handleDelete = async () => {
+    if (!deleteId) return
+
     try {
-      await deleteInquiry(inquiries._id)
-      toast.success('Inquiry deleted')
-      setInquiries(inquiries.filter((i) => i._id !== deleteId))
+      await deleteInquiry(deleteId)
+      toast.success('Inquiry deleted successfully')
+      setInquiries((prev) => prev.filter((i) => i._id !== deleteId))
     } catch (error) {
-      toast.error('Failed to delete')
+      toast.error('Failed to delete inquiry')
+      console.error('Delete error:', error)
     }
     setDeleteId(null)
   }
-
-  const [deleteId, setDeleteId] = useState(null)
 
   return (
     <div>
@@ -69,12 +71,25 @@ export default function InquiriesPage() {
                     <Phone className="w-4 h-4 text-gray-400" />
                     <a href={`tel:${inquiry.phone}`} className="text-gray-600 hover:text-accent">{inquiry.phone}</a>
                   </div>
-                  {inquiry.city && <p className="text-sm text-gray-500">City: {inquiry.city}</p>}
-                  {inquiry.product && <p className="text-sm text-gray-500">Product: {inquiry.product}</p>}
+                  {inquiry.city && (
+                    <p className="text-sm text-gray-500">
+                      <span className="font-medium">City:</span> {inquiry.city}
+                    </p>
+                  )}
+                  {inquiry.product && (
+                    <p className="text-sm text-gray-500">
+                      <span className="font-medium">Product:</span> {inquiry.product}
+                    </p>
+                  )}
                   <p className="text-gray-700 mt-2">{inquiry.message}</p>
-                  <p className="text-xs text-gray-400 mt-2">{inquiry.createdAt ? new Date(inquiry.createdAt).toLocaleString() : ''}</p>
+                  <p className="text-xs text-gray-400 mt-2">
+                    {inquiry.createdAt ? new Date(inquiry.createdAt).toLocaleString() : ''}
+                  </p>
                 </div>
-                <button onClick={() => setDeleteId(inquiry._id)} className="p-2 text-red-500 hover:bg-red-50 rounded self-start">
+                <button
+                  onClick={() => setDeleteId(inquiry._id)}
+                  className="p-2 text-red-500 hover:bg-red-50 rounded self-start"
+                >
                   <Trash2 className="w-5 h-5" />
                 </button>
               </div>
@@ -83,7 +98,13 @@ export default function InquiriesPage() {
         )}
       </div>
 
-      <ConfirmDialog open={!!deleteId} onOpenChange={() => setDeleteId(null)} onConfirm={handleDelete} title="Delete Inquiry" description="Are you sure you want to delete this inquiry?" />
+      <ConfirmDialog
+        open={!!deleteId}
+        onOpenChange={() => setDeleteId(null)}
+        onConfirm={handleDelete}
+        title="Delete Inquiry"
+        description="Are you sure you want to delete this inquiry?"
+      />
     </div>
   )
 }
