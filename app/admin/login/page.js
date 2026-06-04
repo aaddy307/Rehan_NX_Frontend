@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuthStore } from '@/store/authStore'
 import { Input } from '@/components/ui/Input'
@@ -10,10 +10,16 @@ import { toast } from 'sonner'
 
 export default function LoginPage() {
   const router = useRouter()
-  const { login } = useAuthStore()
+  const { login, checkAuth, isAuthenticated, isLoading } = useAuthStore()
   const [loading, setLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const [formData, setFormData] = useState({ email: '', password: '' })
+
+  useEffect(() => {
+    if (!isLoading && isAuthenticated) {
+      router.push('/admin/dashboard')
+    }
+  }, [isAuthenticated, isLoading, router])
 
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
@@ -26,6 +32,7 @@ export default function LoginPage() {
     const result = await login(formData)
     if (result.success) {
       toast.success('Login successful')
+      await checkAuth()
       router.push('/admin/dashboard')
     } else {
       toast.error(result.message)

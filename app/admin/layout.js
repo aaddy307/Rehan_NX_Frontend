@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
 import { useAuthStore } from '@/store/authStore'
 import AdminSidebar from '@/components/layout/AdminSidebar'
@@ -10,22 +10,29 @@ export default function AdminLayout({ children }) {
   const router = useRouter()
   const pathname = usePathname()
   const { isAuthenticated, isLoading, checkAuth } = useAuthStore()
+  const [checked, setChecked] = useState(false)
 
   useEffect(() => {
-    checkAuth()
+    const initAuth = async () => {
+      await checkAuth()
+      setChecked(true)
+    }
+    initAuth()
   }, [checkAuth])
 
   useEffect(() => {
-    if (!isLoading && !isAuthenticated && pathname !== '/admin/login') {
-      router.push('/admin/login')
+    if (checked && !isLoading) {
+      if (!isAuthenticated && pathname !== '/admin/login') {
+        router.push('/admin/login')
+      }
     }
-  }, [isLoading, isAuthenticated, pathname, router])
+  }, [checked, isLoading, isAuthenticated, pathname, router])
 
   if (pathname === '/admin/login') {
     return children
   }
 
-  if (isLoading) {
+  if (isLoading || !checked) {
     return (
       <div className="min-h-screen bg-gray-100 flex items-center justify-center">
         <LoadingSkeleton type="card" rows={1} />
