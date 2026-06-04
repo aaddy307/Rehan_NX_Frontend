@@ -1,5 +1,3 @@
-import { getProducts, getCategories } from '@/services/api'
-
 export default async function sitemap() {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://rehannxmobiles.com'
 
@@ -10,19 +8,29 @@ export default async function sitemap() {
   ]
 
   try {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL + '/api/v1'
+    
     const [productsRes, categoriesRes] = await Promise.all([
-      getProducts({ limit: 100 }),
-      getCategories(),
+      fetch(`${apiUrl}/products?limit=100`),
+      fetch(`${apiUrl}/categories`),
     ])
 
-    const productPages = productsRes.data.products.map((product) => ({
+    if (!productsRes.ok || !categoriesRes.ok) {
+      console.error('Sitemap API error:', productsRes.status, categoriesRes.status)
+      return staticPages
+    }
+
+    const productsData = await productsRes.json()
+    const categoriesData = await categoriesRes.json()
+
+    const productPages = (productsData.data?.products || []).map((product) => ({
       url: `${baseUrl}/products/${product.slug}`,
       lastModified: new Date(product.updatedAt),
       changeFrequency: 'weekly',
       priority: 0.7,
     }))
 
-    const categoryPages = categoriesRes.data.categories.map((cat) => ({
+    const categoryPages = (categoriesData.data?.categories || []).map((cat) => ({
       url: `${baseUrl}/products?category=${cat.slug}`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
