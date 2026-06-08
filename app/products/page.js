@@ -1,7 +1,7 @@
 'use client'
 
 import { Suspense, useEffect, useState } from 'react'
-import { useSearchParams } from 'next/navigation'
+import { useSearchParams, useRouter } from 'next/navigation'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
 import ProductGrid from '@/components/products/ProductGrid'
@@ -13,11 +13,18 @@ import { Filter, X } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 
 function ProductsContent() {
+  const router = useRouter()
   const searchParams = useSearchParams()
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
   const [pagination, setPagination] = useState(null)
   const [showFilters, setShowFilters] = useState(false)
+
+  const handlePageChange = (page) => {
+    const params = new URLSearchParams(searchParams.toString())
+    params.set('page', page)
+    router.push(`/products?${params.toString()}`)
+  }
   const { fetchSettings } = useSettingsStore()
 
   useEffect(() => {
@@ -32,6 +39,8 @@ function ProductsContent() {
       if (searchParams.get('brand')) params.brand = searchParams.get('brand')
       if (searchParams.get('featured')) params.featured = searchParams.get('featured')
       if (searchParams.get('search')) params.search = searchParams.get('search')
+      if (searchParams.get('page')) params.page = searchParams.get('page')
+      if (searchParams.get('sort')) params.sort = searchParams.get('sort')
 
       try {
         const response = await getProducts(params)
@@ -77,7 +86,11 @@ function ProductsContent() {
           {pagination && pagination.pages > 1 && (
             <div className="flex justify-center gap-2 mt-8">
               {Array.from({ length: pagination.pages }, (_, i) => i + 1).map((page) => (
-                <button key={page} className={`w-10 h-10 rounded-lg ${page === pagination.page ? 'bg-accent text-white' : 'bg-white text-gray-700 hover:bg-gray-100'}`}>
+                <button
+                  key={page}
+                  onClick={() => handlePageChange(page)}
+                  className={`w-10 h-10 rounded-lg ${page === pagination.page ? 'bg-accent text-white' : 'bg-white text-gray-700 hover:bg-gray-100'}`}
+                >
                   {page}
                 </button>
               ))}

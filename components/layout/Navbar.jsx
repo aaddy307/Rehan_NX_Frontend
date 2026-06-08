@@ -48,9 +48,9 @@ export default function Navbar() {
           </div>
 
           <div className="hidden lg:flex items-center gap-4">
-            <a href={`tel:${settings?.phone1 || ''}`} className="flex items-center gap-2 text-white hover:text-accent transition-colors">
+            <a href={`tel:${settings?.phone1 || ''}`} className="flex items-center gap-2 bg-accent text-white px-4 py-2 rounded-lg hover:bg-accent/90 transition-colors">
               <Phone className="w-4 h-4" />
-              <span>{settings?.phone1 || 'Call Us'}</span>
+              <span>Call Us</span>
             </a>
             <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors">
               <MessageCircle className="w-4 h-4" />
@@ -73,11 +73,11 @@ export default function Navbar() {
               </Link>
             ))}
             <div className="pt-4 border-t border-white/10 flex flex-col gap-3">
-              <a href={`tel:${settings?.phone1 || ''}`} className="flex items-center gap-2 text-white">
+              <a href={`tel:${settings?.phone1 || ''}`} className="flex items-center gap-2 bg-accent text-white px-4 py-3 rounded-lg justify-center transition-colors hover:bg-accent/90">
                 <Phone className="w-4 h-4" />
-                <span>{settings?.phone1 || 'Call Us'}</span>
+                <span>Call Us</span>
               </a>
-              <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-green-500 text-white px-4 py-3 rounded-lg justify-center">
+              <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-green-500 text-white px-4 py-3 rounded-lg justify-center transition-colors hover:bg-green-600">
                 <MessageCircle className="w-4 h-4" />
                 <span>WhatsApp</span>
               </a>
