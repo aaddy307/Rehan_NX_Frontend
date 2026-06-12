@@ -26,7 +26,7 @@ export default function ProductsPage() {
   const fetchProducts = async (searchParams = '') => {
     try {
       setLoading(true)
-      const response = await getProducts({ limit: 100, search: searchParams })
+      const response = await getProducts({ limit: 100, search: searchParams, all: true })
       setProducts(response.data.products)
     } catch (error) {
       toast.error('Failed to load products')

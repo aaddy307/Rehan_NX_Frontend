@@ -18,8 +18,8 @@ export default function DashboardPage() {
       try {
         setLoading(true)
         const [productsRes, categoriesRes, inquiriesRes] = await Promise.all([
-          getProducts({ limit: 100 }),
-          getCategories(),
+          getProducts({ limit: 100, all: true }),
+          getCategories({ all: true }),
           getInquiries({ limit: 1 }),
         ])
         setStats({
@@ -33,8 +33,8 @@ export default function DashboardPage() {
         // Fallback without inquiries
         try {
           const [productsRes, categoriesRes] = await Promise.all([
-            getProducts({ limit: 100 }),
-            getCategories(),
+            getProducts({ limit: 100, all: true }),
+            getCategories({ all: true }),
           ])
           setStats({
             products: productsRes.data.pagination?.total || productsRes.data.products?.length || 0,

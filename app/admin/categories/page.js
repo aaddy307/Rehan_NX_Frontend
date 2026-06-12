@@ -25,7 +25,7 @@ export default function CategoriesPage() {
   const fetchCategories = async () => {
     try {
       setLoading(true)
-      const response = await getCategories()
+      const response = await getCategories({ all: true })
       setCategories(response.data.categories)
     } catch (error) {
       toast.error('Failed to load categories')
