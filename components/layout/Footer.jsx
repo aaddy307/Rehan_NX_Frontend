@@ -111,13 +111,15 @@ export default function Footer() {
       {/* Bottom Bar */}
       <div className="border-t border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <p className="text-gray-400 text-sm text-center sm:text-left">
-              © {new Date().getFullYear()} Ahmed khan. All rights reserved.
-            </p>
-            <p className="text-gray-500 text-sm flex items-center gap-1">
-              Made by <span className="text-accent font-medium">Ahmed Khan</span>
-            </p>
+          <div className="flex justify-center">
+            <a
+              href="https://ahmed.nexcoreinstitute.org/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-400 text-sm hover:text-accent transition-colors duration-300"
+            >
+              made by ahmed khan all rights reserve
+            </a>
           </div>
         </div>
       </div>
