@@ -111,15 +111,17 @@ export default function Footer() {
       {/* Bottom Bar */}
       <div className="border-t border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex justify-center">
+          <div className="flex justify-center items-center gap-1 text-gray-400 text-sm">
+            <span>Made by ©</span>
             <a
               href="https://ahmed.nexcoreinstitute.org/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 text-sm hover:text-accent transition-colors duration-300"
+              className="hover:text-accent transition-colors duration-300"
             >
-              Made by Ahmed khan. All rights reserved.
+              Ahmed khan
             </a>
+            <span>. All rights reserved.</span>
           </div>
         </div>
       </div>
