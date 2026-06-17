@@ -118,7 +118,7 @@ export default function Footer() {
               rel="noopener noreferrer"
               className="text-gray-400 text-sm hover:text-accent transition-colors duration-300"
             >
-              made by ahmed khan all rights reserve
+              Made by Ahmed khan. All rights reserved.
             </a>
           </div>
         </div>
