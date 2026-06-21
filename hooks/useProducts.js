@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { getProducts } from '@/services/api'
 
 export const useProducts = (params = {}) => {
@@ -7,11 +7,13 @@ export const useProducts = (params = {}) => {
   const [pagination, setPagination] = useState(null)
   const [error, setError] = useState(null)
 
+  const stableParams = useMemo(() => params, [JSON.stringify(params)])
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         setLoading(true)
-        const response = await getProducts(params)
+        const response = await getProducts(stableParams)
         setProducts(response.data.products)
         setPagination(response.data.pagination)
       } catch (err) {
@@ -22,7 +24,7 @@ export const useProducts = (params = {}) => {
     }
 
     fetchProducts()
-  }, [JSON.stringify(params)])
+  }, [stableParams])
 
   return { products, loading, pagination, error }
 }

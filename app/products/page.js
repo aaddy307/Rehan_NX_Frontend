@@ -19,6 +19,7 @@ function ProductsContent() {
   const [loading, setLoading] = useState(true)
   const [pagination, setPagination] = useState(null)
   const [showFilters, setShowFilters] = useState(false)
+  const [error, setError] = useState(null)
 
   const handlePageChange = (page) => {
     const params = new URLSearchParams(searchParams.toString())
@@ -46,8 +47,9 @@ function ProductsContent() {
         const response = await getProducts(params)
         setProducts(response.data.products)
         setPagination(response.data.pagination)
-      } catch (error) {
-        console.error('Error fetching products:', error)
+        setError(null)
+      } catch (err) {
+        setError(err)
       } finally {
         setLoading(false)
       }
@@ -79,6 +81,10 @@ function ProductsContent() {
         <div className="flex-1">
           {loading ? (
             <LoadingSkeleton type="card" rows={8} />
+          ) : error ? (
+            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+              Failed to load products. Please try again later.
+            </div>
           ) : (
             <ProductGrid products={products} loading={false} emptyMessage="No products found matching your criteria" />
           )}

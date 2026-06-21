@@ -12,8 +12,10 @@ import { Button } from '@/components/ui/Button'
 export default function ProductFilters() {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const { categories } = useCategories()
-  const { brands } = useBrands()
+  const { categories, error: categoriesError } = useCategories()
+  const { brands, error: brandsError } = useBrands()
+
+  const error = categoriesError || brandsError
 
   const search = searchParams.get('search') || ''
   const category = searchParams.get('category') || ''
@@ -52,6 +54,14 @@ export default function ProductFilters() {
   }
 
   const hasFilters = search || category || brand
+
+  if (error) {
+    return (
+      <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+        Failed to load filters. Please try again later.
+      </div>
+    )
+  }
 
   return (
     <div className="space-y-4">

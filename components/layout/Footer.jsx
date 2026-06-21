@@ -16,9 +16,9 @@ export default function Footer() {
     <footer className="bg-gray-900 text-white">
       {/* Main Footer */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Brand Column */}
-          <div className="lg:col-span-1">
+          <div className="sm:col-span-2 lg:col-span-1">
             <Link href="/" className="flex items-center gap-3 mb-6">
               <div className="w-12 h-12 bg-gradient-to-br from-accent to-yellow-500 rounded-xl flex items-center justify-center">
                 <span className="text-white font-bold text-2xl">R</span>
@@ -28,7 +28,7 @@ export default function Footer() {
                 <p className="text-gray-400 text-sm">Mobiles</p>
               </div>
             </Link>
-            <p className="text-gray-400 mb-6">Your trusted destination for genuine smartphones and accessories in India. Best prices guaranteed!</p>
+            <p className="text-gray-400 mb-6 text-sm leading-relaxed">Your trusted destination for genuine smartphones and accessories in India. Best prices guaranteed!</p>
             <div className="flex gap-3">
               {settings?.facebook && (
                 <a href={settings.facebook} target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center hover:bg-blue-600 transition-all duration-300 hover:-translate-y-1">
@@ -51,7 +51,6 @@ export default function Footer() {
               <li><Link href="/products" className="text-gray-400 hover:text-accent transition-colors inline-block hover:translate-x-1">Products</Link></li>
               <li><Link href="/contact" className="text-gray-400 hover:text-accent transition-colors inline-block hover:translate-x-1">Contact Us</Link></li>
               <li><Link href="/contact" className="text-gray-400 hover:text-accent transition-colors inline-block hover:translate-x-1">About Us</Link></li>
-              <li><Link href="/admin/login" className="text-gray-400 hover:text-accent transition-colors inline-block hover:translate-x-1">Admin Panel</Link></li>
             </ul>
           </div>
 

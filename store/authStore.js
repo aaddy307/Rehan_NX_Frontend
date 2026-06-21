@@ -35,8 +35,10 @@ export const useAuthStore = create((set) => ({
     try {
       const response = await getMe()
       set({ admin: response.data.admin, isAuthenticated: true, isLoading: false })
+      return true
     } catch (error) {
       set({ admin: null, isAuthenticated: false, isLoading: false })
+      return false
     }
   },
 }))

@@ -9,8 +9,8 @@ export const useBrands = () => {
   useEffect(() => {
     const fetchBrands = async () => {
       try {
-        const response = await getBrands()
-        setBrands(response.data.brands.filter(b => b.status))
+        const response = await getBrands({ status: true })
+        setBrands(response.data.brands)
       } catch (err) {
         setError(err)
       } finally {

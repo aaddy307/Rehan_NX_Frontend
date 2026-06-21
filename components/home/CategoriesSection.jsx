@@ -14,14 +14,27 @@ const iconMap = {
 }
 
 export default function CategoriesSection() {
-  const { categories, loading } = useCategories()
+  const { categories, loading, error } = useCategories()
+
+  if (error) {
+    return (
+      <section className="py-16 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-2xl md:text-3xl font-bold text-primary text-center mb-8">Shop by Category</h2>
+          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+            Failed to load categories. Please try again later.
+          </div>
+        </div>
+      </section>
+    )
+  }
 
   if (loading) {
     return (
       <section className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-2xl md:text-3xl font-bold text-primary text-center mb-8">Shop by Category</h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {[...Array(6)].map((_, i) => (
               <div key={i} className="aspect-square bg-gray-200 rounded-xl animate-pulse" />
             ))}
@@ -35,7 +48,7 @@ export default function CategoriesSection() {
     <section className="py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <h2 className="text-2xl md:text-3xl font-bold text-primary text-center mb-8">Shop by Category</h2>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {categories.map((cat) => {
             const IconComponent = iconMap[cat.name] || iconMap.default
             return (

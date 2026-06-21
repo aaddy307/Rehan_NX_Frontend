@@ -27,7 +27,7 @@ export const deleteInquiry = (id) => api.delete(`/inquiries/${id}`)
 export const getSettings = () => api.get('/settings')
 export const updateSettings = (data) => api.put('/settings', data)
 
-export const getBrands = () => api.get('/brands')
+export const getBrands = (params) => api.get('/brands', { params })
 export const createBrand = (data) => api.post('/brands', data)
 export const updateBrand = (id, data) => api.put(`/brands/${id}`, data)
 export const deleteBrand = (id) => api.delete(`/brands/${id}`)

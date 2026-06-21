@@ -26,17 +26,17 @@ export default function DataTable({ columns, data, onEdit, onDelete, onView }) {
               <td className="py-3 px-4">
                 <div className="flex justify-end gap-2">
                   {onView && (
-                    <button onClick={() => onView(row)} className="p-2 text-gray-500 hover:bg-gray-100 rounded">
+                    <button onClick={() => onView(row)} className="p-3 text-gray-500 hover:bg-gray-100 rounded">
                       <Eye className="w-4 h-4" />
                     </button>
                   )}
                   {onEdit && (
-                    <button onClick={() => onEdit(row)} className="p-2 text-blue-500 hover:bg-blue-50 rounded">
+                    <button onClick={() => onEdit(row)} className="p-3 text-blue-500 hover:bg-blue-50 rounded">
                       <Edit className="w-4 h-4" />
                     </button>
                   )}
                   {onDelete && (
-                    <button onClick={() => onDelete(row)} className="p-2 text-red-500 hover:bg-red-50 rounded">
+                    <button onClick={() => onDelete(row)} className="p-3 text-red-500 hover:bg-red-50 rounded">
                       <Trash2 className="w-4 h-4" />
                     </button>
                   )}

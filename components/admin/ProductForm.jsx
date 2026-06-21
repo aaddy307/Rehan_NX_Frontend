@@ -160,12 +160,10 @@ export default function ProductForm({ productId }) {
         <Textarea name="description" value={formData.description} onChange={handleChange} rows={4} placeholder="Detailed product description" />
       </div>
 
-      {!productId && (
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Images</label>
-          <input type="file" name="images" multiple accept="image/*" onChange={(e) => setFormData((prev) => ({ ...prev, images: e.target.files }))} className="w-full border rounded-lg p-2" />
-        </div>
-      )}
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">Images</label>
+        <input type="file" name="images" multiple accept="image/*" onChange={(e) => setFormData((prev) => ({ ...prev, images: e.target.files }))} className="w-full border rounded-lg p-2" />
+      </div>
 
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">Specifications</label>
