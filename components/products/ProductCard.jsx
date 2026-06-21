@@ -24,7 +24,9 @@ export default function ProductCard({ product }) {
         {product.featured && (
           <span className="absolute top-2 left-2 bg-accent text-white text-xs px-2 py-1 rounded">Featured</span>
         )}
-        <span className="absolute top-2 right-2 bg-primary text-white text-xs px-2 py-1 rounded">{product.brand}</span>
+        <span className="absolute top-2 right-2 bg-primary text-white text-xs px-2 py-1 rounded">
+          {typeof product.brand === 'object' ? product.brand?.name : product.brand}
+        </span>
       </div>
       <div className="p-4">
         <h3 className="font-semibold text-gray-900 line-clamp-2 mb-2">{product.name}</h3>

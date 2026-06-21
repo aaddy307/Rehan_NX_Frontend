@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import { Input } from '@/components/ui/Input'
-import { Textarea } from '@/components/ui/Textarea'
 import { Switch } from '@/components/ui/Switch'
 import { Button } from '@/components/ui/Button'
 import { createCategory, updateCategory } from '@/services/api'
@@ -14,9 +13,7 @@ export default function CategoryForm({ category, onSuccess }) {
   const [formData, setFormData] = useState({
     name: category?.name || '',
     slug: category?.slug || '',
-    description: category?.description || '',
     status: category?.status ?? true,
-    image: null,
   })
 
   const handleChange = (e) => {
@@ -32,14 +29,11 @@ export default function CategoryForm({ category, onSuccess }) {
     setLoading(true)
 
     try {
-      const data = new FormData()
-      Object.entries(formData).forEach(([key, val]) => {
-        if (key === 'image' && val) {
-          data.append('image', val)
-        } else {
-          data.append(key, String(val))
-        }
-      })
+      const data = {
+        name: formData.name,
+        slug: formData.slug,
+        status: formData.status,
+      }
 
       if (category?._id) {
         await updateCategory(category._id, data)
@@ -65,14 +59,6 @@ export default function CategoryForm({ category, onSuccess }) {
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">Slug</label>
         <Input name="slug" value={formData.slug} onChange={handleChange} placeholder="auto-generated" />
-      </div>
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
-        <Textarea name="description" value={formData.description} onChange={handleChange} rows={3} />
-      </div>
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">Image</label>
-        <input type="file" accept="image/*" onChange={(e) => setFormData((prev) => ({ ...prev, image: e.target.files[0] }))} className="w-full border rounded-lg p-2" />
       </div>
       <div className="flex items-center gap-2">
         <Switch checked={formData.status} onCheckedChange={(val) => setFormData((prev) => ({ ...prev, status: val }))} />

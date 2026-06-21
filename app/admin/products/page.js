@@ -55,7 +55,7 @@ export default function ProductsPage() {
     { key: 'image', label: 'Image', render: (val) => val?.[0] ? <Image src={val[0].url} alt="" width={50} height={50} className="w-12 h-12 object-cover rounded" /> : <div className="w-12 h-12 bg-gray-200 rounded" /> },
     { key: 'name', label: 'Name' },
     { key: 'category', label: 'Category', render: (val) => typeof val === 'object' ? val?.name : 'N/A' },
-    { key: 'brand', label: 'Brand' },
+    { key: 'brand', label: 'Brand', render: (val) => typeof val === 'object' ? val?.name : val || 'N/A' },
     { key: 'price', label: 'Price', render: (val) => formatPrice(val) },
     { key: 'status', label: 'Status', render: (val) => <span className={`px-2 py-1 rounded text-xs ${val ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>{val ? 'Active' : 'Inactive'}</span> },
   ]

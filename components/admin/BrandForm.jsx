@@ -12,7 +12,6 @@ export default function BrandForm({ brand, onSuccess }) {
   const [formData, setFormData] = useState({
     name: brand?.name || '',
     status: brand?.status ?? true,
-    logo: null,
   })
 
   const handleChange = (e) => {
@@ -24,11 +23,9 @@ export default function BrandForm({ brand, onSuccess }) {
     setLoading(true)
 
     try {
-      const data = new FormData()
-      data.append('name', formData.name)
-      data.append('status', String(formData.status))
-      if (formData.logo) {
-        data.append('logo', formData.logo)
+      const data = {
+        name: formData.name,
+        status: formData.status,
       }
 
       if (brand?._id) {
@@ -51,10 +48,6 @@ export default function BrandForm({ brand, onSuccess }) {
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">Name *</label>
         <Input name="name" value={formData.name} onChange={handleChange} required placeholder="Brand name" />
-      </div>
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">Logo</label>
-        <input type="file" accept="image/*" onChange={(e) => setFormData((prev) => ({ ...prev, logo: e.target.files[0] }))} className="w-full border rounded-lg p-2" />
       </div>
       <div className="flex items-center gap-2">
         <Switch checked={formData.status} onCheckedChange={(val) => setFormData((prev) => ({ ...prev, status: val }))} />

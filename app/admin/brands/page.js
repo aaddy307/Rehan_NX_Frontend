@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import Image from 'next/image'
 import { getBrands, deleteBrand } from '@/services/api'
 import Modal from '@/components/ui/Modal'
 import BrandForm from '@/components/admin/BrandForm'
@@ -64,37 +63,29 @@ export default function BrandsPage() {
         ) : brands.length === 0 ? (
           <div className="p-8 text-center text-gray-500">No brands yet. Add your first brand!</div>
         ) : (
-          <table className="w-full">
+          <table className="w-full table-fixed">
             <thead>
               <tr className="border-b">
-                <th className="text-left py-3 px-4 font-medium text-gray-600">Logo</th>
-                <th className="text-left py-3 px-4 font-medium text-gray-600">Name</th>
-                <th className="text-left py-3 px-4 font-medium text-gray-600">Status</th>
-                <th className="text-right py-3 px-4 font-medium text-gray-600">Actions</th>
+                <th className="text-left py-3 px-3 sm:px-4 font-medium text-gray-600 w-1/2">Name</th>
+                <th className="text-left py-3 px-3 sm:px-4 font-medium text-gray-600 w-1/4">Status</th>
+                <th className="text-right py-3 px-3 sm:px-4 font-medium text-gray-600 w-1/4">Actions</th>
               </tr>
             </thead>
             <tbody>
               {brands.map((brand) => (
                 <tr key={brand._id} className="border-b hover:bg-gray-50">
-                  <td className="py-3 px-4">
-                    {brand.logo?.url ? (
-                      <Image src={brand.logo.url} alt={brand.name} width={50} height={50} className="w-12 h-12 object-cover rounded" />
-                    ) : (
-                      <div className="w-12 h-12 bg-gray-200 rounded flex items-center justify-center text-gray-400 text-xs">{brand.name.charAt(0)}</div>
-                    )}
-                  </td>
-                  <td className="py-3 px-4 font-medium">{brand.name}</td>
-                  <td className="py-3 px-4">
+                  <td className="py-3 px-3 sm:px-4 font-medium truncate">{brand.name}</td>
+                  <td className="py-3 px-3 sm:px-4">
                     <span className={`px-2 py-1 rounded text-xs ${brand.status ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
                       {brand.status ? 'Active' : 'Inactive'}
                     </span>
                   </td>
-                  <td className="py-3 px-4">
-                    <div className="flex justify-end gap-2">
-                      <button onClick={() => { setEditBrand(brand); setModalOpen(true) }} className="p-2 text-blue-500 hover:bg-blue-50 rounded">
+                  <td className="py-3 px-3 sm:px-4">
+                    <div className="flex justify-end gap-1 sm:gap-2">
+                      <button onClick={() => { setEditBrand(brand); setModalOpen(true) }} className="p-1.5 sm:p-2 text-blue-500 hover:bg-blue-50 rounded">
                         <Edit className="w-4 h-4" />
                       </button>
-                      <button onClick={() => setDeleteId(brand._id)} className="p-2 text-red-500 hover:bg-red-50 rounded">
+                      <button onClick={() => setDeleteId(brand._id)} className="p-1.5 sm:p-2 text-red-500 hover:bg-red-50 rounded">
                         <Trash2 className="w-4 h-4" />
                       </button>
                     </div>

@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import Image from 'next/image'
 import { getCategories, deleteCategory } from '@/services/api'
 import Modal from '@/components/ui/Modal'
 import CategoryForm from '@/components/admin/CategoryForm'
@@ -62,29 +61,25 @@ export default function CategoriesPage() {
         {loading ? (
           <LoadingSkeleton type="table" rows={5} />
         ) : (
-          <table className="w-full">
+          <table className="w-full table-fixed">
             <thead>
               <tr className="border-b">
-                <th className="text-left py-3 px-4 font-medium text-gray-600">Image</th>
-                <th className="text-left py-3 px-4 font-medium text-gray-600">Name</th>
-                <th className="text-left py-3 px-4 font-medium text-gray-600">Status</th>
-                <th className="text-right py-3 px-4 font-medium text-gray-600">Actions</th>
+                <th className="text-left py-3 px-3 sm:px-4 font-medium text-gray-600 w-1/2">Name</th>
+                <th className="text-left py-3 px-3 sm:px-4 font-medium text-gray-600 w-1/4">Status</th>
+                <th className="text-right py-3 px-3 sm:px-4 font-medium text-gray-600 w-1/4">Actions</th>
               </tr>
             </thead>
             <tbody>
               {categories.map((cat) => (
                 <tr key={cat._id} className="border-b hover:bg-gray-50">
-                  <td className="py-3 px-4">
-                    {cat.image?.url ? <Image src={cat.image.url} alt={cat.name} width={50} height={50} className="w-12 h-12 object-cover rounded" /> : <div className="w-12 h-12 bg-gray-200 rounded" />}
-                  </td>
-                  <td className="py-3 px-4 font-medium">{cat.name}</td>
-                  <td className="py-3 px-4">
+                  <td className="py-3 px-3 sm:px-4 font-medium truncate">{cat.name}</td>
+                  <td className="py-3 px-3 sm:px-4">
                     <span className={`px-2 py-1 rounded text-xs ${cat.status ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>{cat.status ? 'Active' : 'Inactive'}</span>
                   </td>
-                  <td className="py-3 px-4">
-                    <div className="flex justify-end gap-2">
-                      <button onClick={() => { setEditCategory(cat); setModalOpen(true) }} className="p-2 text-blue-500 hover:bg-blue-50 rounded"><Edit className="w-4 h-4" /></button>
-                      <button onClick={() => setDeleteId(cat._id)} className="p-2 text-red-500 hover:bg-red-50 rounded"><Trash2 className="w-4 h-4" /></button>
+                  <td className="py-3 px-3 sm:px-4">
+                    <div className="flex justify-end gap-1 sm:gap-2">
+                      <button onClick={() => { setEditCategory(cat); setModalOpen(true) }} className="p-1.5 sm:p-2 text-blue-500 hover:bg-blue-50 rounded"><Edit className="w-4 h-4" /></button>
+                      <button onClick={() => setDeleteId(cat._id)} className="p-1.5 sm:p-2 text-red-500 hover:bg-red-50 rounded"><Trash2 className="w-4 h-4" /></button>
                     </div>
                   </td>
                 </tr>

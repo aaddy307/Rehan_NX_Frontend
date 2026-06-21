@@ -103,7 +103,9 @@ export default function ProductDetailPage() {
 
             <div className="space-y-6">
               <div>
-                <span className="inline-block bg-primary text-white text-sm px-3 py-1 rounded mb-3">{product.brand}</span>
+                <span className="inline-block bg-primary text-white text-sm px-3 py-1 rounded mb-3">
+                  {typeof product.brand === 'object' ? product.brand?.name : product.brand}
+                </span>
                 <h1 className="text-2xl md:text-3xl font-bold text-primary">{product.name}</h1>
               </div>
               <div className="text-3xl font-bold text-accent">{formatPrice(product.price)}</div>
