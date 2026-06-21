@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { MapPin, Phone, Mail, MessageCircle, Facebook, Instagram, Heart } from 'lucide-react'
+import { MapPin, Phone, Mail, MessageCircle, Facebook, Instagram } from 'lucide-react'
 import { useSettingsStore } from '@/store/settingsStore'
 import { useCategories } from '@/hooks/useCategories'
 import { WHATSAPP_BASE } from '@/utils/constants'

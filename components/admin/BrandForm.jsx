@@ -6,7 +6,6 @@ import { Switch } from '@/components/ui/Switch'
 import { Button } from '@/components/ui/Button'
 import { createBrand, updateBrand } from '@/services/api'
 import { toast } from 'sonner'
-import { generateSlug } from '@/lib/utils'
 
 export default function BrandForm({ brand, onSuccess }) {
   const [loading, setLoading] = useState(false)

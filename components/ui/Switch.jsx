@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils'
 const Switch = React.forwardRef(({ className, checked, onCheckedChange, ...props }, ref) => {
   return (
     <button
+      type="button"
       role="switch"
       aria-checked={checked}
       ref={ref}

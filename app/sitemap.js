@@ -23,14 +23,14 @@ export default async function sitemap() {
     const productsData = await productsRes.json()
     const categoriesData = await categoriesRes.json()
 
-    const productPages = (productsData.data?.products || []).map((product) => ({
+    const productPages = (productsData.products || []).map((product) => ({
       url: `${baseUrl}/products/${product.slug}`,
       lastModified: new Date(product.updatedAt),
       changeFrequency: 'weekly',
       priority: 0.7,
     }))
 
-    const categoryPages = (categoriesData.data?.categories || []).map((cat) => ({
+    const categoryPages = (categoriesData.categories || []).map((cat) => ({
       url: `${baseUrl}/products?category=${cat.slug}`,
       lastModified: new Date(),
       changeFrequency: 'weekly',

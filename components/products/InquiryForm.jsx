@@ -17,7 +17,7 @@ export default function InquiryForm({ productName }) {
   })
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
   }
 
   const handleSubmit = async (e) => {
@@ -28,7 +28,7 @@ export default function InquiryForm({ productName }) {
       const payload = { ...formData, product: productName }
       await submitInquiry(payload)
       toast.success('Inquiry submitted successfully!')
-      setFormData({ name: '', phone: '', city: '', message: productName || '' })
+      setFormData({ name: '', phone: '', city: '', message: productName ? `I'm interested in ${productName}` : '' })
     } catch (error) {
       toast.error(error.response?.data?.message || 'Failed to submit inquiry')
     } finally {

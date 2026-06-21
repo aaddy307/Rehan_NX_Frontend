@@ -14,7 +14,7 @@ export default function ProductCard({ product }) {
   return (
     <div className="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-200">
       <div className="relative aspect-square overflow-hidden">
-        {product.images?.[0] ? (
+        {product.images?.[0]?.url ? (
           <Image src={product.images[0].url} alt={product.name} fill className="object-cover group-hover:scale-105 transition-transform duration-200" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw" />
         ) : (
           <div className="absolute inset-0 bg-gray-100 flex items-center justify-center">

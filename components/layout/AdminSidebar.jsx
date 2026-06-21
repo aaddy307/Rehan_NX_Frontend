@@ -31,11 +31,11 @@ export default function AdminSidebar() {
         {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
       </button>
 
-      {isOpen && <div className="lg:hidden fixed inset-0 bg-black/50 z-40" onClick={() => setIsOpen(false)} />}
+      {isOpen && <div className="lg:hidden fixed inset-0 bg-black/50 z-30" onClick={() => setIsOpen(false)} />}
 
-      <aside className={`fixed top-0 left-0 h-full w-64 bg-primary text-white z-40 transform transition-transform duration-200 lg:translate-x-0 ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+      <aside className={`fixed top-0 left-0 h-full w-64 bg-primary text-white z-40 transform transition-transform duration-200 ${isOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0`}>
         <div className="p-6">
-          <Link href="/" className="flex items-center gap-2 mb-8">
+          <Link href="/" className="flex items-center gap-2 mb-8 mt-12 lg:mt-0">
             <div className="w-10 h-10 bg-accent rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-xl">R</span>
             </div>

@@ -10,9 +10,7 @@ export default function SpecificationsInput({ value = [], onChange }) {
   }
 
   const handleChange = (index, field, val) => {
-    const newSpecs = [...value]
-    newSpecs[index][field] = val
-    onChange(newSpecs)
+    onChange(value.map((spec, i) => (i === index ? { ...spec, [field]: val } : spec)))
   }
 
   const handleRemove = (index) => {

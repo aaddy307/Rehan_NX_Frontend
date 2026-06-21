@@ -49,12 +49,12 @@ export default function ProductForm({ productId }) {
     if (productId) {
       const fetchProduct = async () => {
         try {
-          const response = await getProduct(productId)
+          const response = await getProduct(productId, { all: true })
           const product = response.data.product
           setFormData({
             name: product.name,
             slug: product.slug,
-            brand: product.brand,
+            brand: typeof product.brand === 'object' ? product.brand._id : product.brand,
             category: typeof product.category === 'object' ? product.category._id : product.category,
             price: product.price.toString(),
             shortDescription: product.shortDescription || '',
@@ -91,9 +91,11 @@ export default function ProductForm({ productId }) {
       Object.entries(formData).forEach(([key, val]) => {
         if (key === 'specifications') {
           data.append(key, JSON.stringify(val))
-        } else if (key === 'images' && val instanceof FileList) {
-          for (let i = 0; i < val.length; i++) {
-            data.append('images', val[i])
+        } else if (key === 'images') {
+          if (val instanceof FileList) {
+            for (let i = 0; i < val.length; i++) {
+              data.append('images', val[i])
+            }
           }
         } else {
           data.append(key, String(val))
@@ -134,7 +136,7 @@ export default function ProductForm({ productId }) {
           <label className="block text-sm font-medium text-gray-700 mb-1">Brand *</label>
           <Select name="brand" value={formData.brand} onChange={handleChange} required>
             <option value="">Select Brand</option>
-            {brands.map((b) => <option key={b._id} value={b.name}>{b.name}</option>)}
+            {brands.map((b) => <option key={b._id} value={b._id}>{b.name}</option>)}
           </Select>
         </div>
         <div>

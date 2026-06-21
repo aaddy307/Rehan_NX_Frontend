@@ -50,9 +50,10 @@ const AlertDialogFooter = ({ className, ...props }) => (
 )
 AlertDialogFooter.displayName = 'AlertDialogFooter'
 
-const AlertDialogCancel = React.forwardRef(({ className, ...props }, ref) => (
+const AlertDialogCancel = React.forwardRef(({ onClick, className, ...props }, ref) => (
   <button
     ref={ref}
+    onClick={onClick}
     className={cn('px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors', className)}
     {...props}
   />

@@ -10,7 +10,7 @@ export const logout = () => api.post('/auth/logout')
 export const getMe = () => api.get('/auth/me')
 
 export const getProducts = (params) => api.get('/products', { params })
-export const getProduct = (slug) => api.get(`/products/${slug}`)
+export const getProduct = (slug, params) => api.get(`/products/${slug}`, { params })
 export const createProduct = (data) => api.post('/products', data)
 export const updateProduct = (id, data) => api.put(`/products/${id}`, data)
 export const deleteProduct = (id) => api.delete(`/products/${id}`)

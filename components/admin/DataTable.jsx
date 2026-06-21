@@ -1,7 +1,6 @@
 'use client'
 
 import { Edit, Trash2, Eye } from 'lucide-react'
-import Image from 'next/image'
 
 export default function DataTable({ columns, data, onEdit, onDelete, onView }) {
   return (

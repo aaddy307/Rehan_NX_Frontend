@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/Input'
 import { Button } from '@/components/ui/Button'
 import { toast } from 'sonner'
 import { Send } from 'lucide-react'
+import { submitInquiry } from '@/services/api'
 
 export default function InquiryForm() {
   const [loading, setLoading] = useState(false)
@@ -25,22 +26,11 @@ export default function InquiryForm() {
     setLoading(true)
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/inquiries`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      })
-
-      const data = await response.json()
-
-      if (data.success) {
-        toast.success('Thank you! Your inquiry has been submitted. We will contact you soon.')
-        setFormData({ name: '', phone: '', city: '', product: '', message: '' })
-      } else {
-        toast.error(data.message || 'Failed to submit inquiry')
-      }
+      await submitInquiry(formData)
+      toast.success('Thank you! Your inquiry has been submitted. We will contact you soon.')
+      setFormData({ name: '', phone: '', city: '', product: '', message: '' })
     } catch (error) {
-      toast.error('Failed to submit inquiry. Please try again.')
+      toast.error(error.response?.data?.message || 'Failed to submit inquiry. Please try again.')
     }
 
     setLoading(false)
