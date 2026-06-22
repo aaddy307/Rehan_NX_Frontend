@@ -69,7 +69,7 @@ export default function ProductForm({ productId }) {
             featured: product.featured,
             status: product.status,
           })
-          setExistingImages(product.images || [])
+          setExistingImages((product.images || []).filter(img => img && img.url))
         } catch (error) {
           toast.error('Failed to load product')
         } finally {
