@@ -56,7 +56,7 @@ function ProductsContent() {
     }
 
     fetchProducts()
-  }, [searchParams])
+  }, [searchParams.toString()])
 
   return (
     <>

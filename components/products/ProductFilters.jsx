@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useRef } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useCategories } from '@/hooks/useCategories'
 import { useBrands } from '@/hooks/useBrands'
@@ -14,6 +14,7 @@ export default function ProductFilters() {
   const searchParams = useSearchParams()
   const { categories, error: categoriesError } = useCategories()
   const { brands, error: brandsError } = useBrands()
+  const debounceRef = useRef(null)
 
   const error = categoriesError || brandsError
 
@@ -29,12 +30,15 @@ export default function ProductFilters() {
     } else {
       params.delete(key)
     }
-    params.delete('page') // Reset to page 1 when filtering
+    params.delete('page')
     router.push(`/products?${params.toString()}`)
   }
 
   const handleSearch = (e) => {
-    updateFilter('search', e.target.value)
+    if (debounceRef.current) clearTimeout(debounceRef.current)
+    debounceRef.current = setTimeout(() => {
+      updateFilter('search', e.target.value)
+    }, 300)
   }
 
   const handleCategoryChange = (e) => {
@@ -69,7 +73,7 @@ export default function ProductFilters() {
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
         <Input 
           placeholder="Search products..." 
-          value={search} 
+          defaultValue={search}
           onChange={handleSearch}
           className="pl-10" 
         />
@@ -90,7 +94,7 @@ export default function ProductFilters() {
         <Select value={brand} onChange={handleBrandChange}>
           <option value="">All Brands</option>
           {brands.map((b) => (
-            <option key={b._id} value={b.name}>{b.name}</option>
+            <option key={b._id} value={b.slug}>{b.name}</option>
           ))}
         </Select>
       </div>

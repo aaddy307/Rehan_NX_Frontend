@@ -17,30 +17,32 @@ export default function DashboardPage() {
     const fetchStats = async () => {
       try {
         setLoading(true)
-        const [productsRes, categoriesRes, inquiriesRes] = await Promise.all([
+        const [productsRes, categoriesRes, inquiriesRes, featuredRes] = await Promise.all([
           getProducts({ limit: 100, all: true }),
           getCategories({ all: true }),
           getInquiries({ limit: 1 }),
+          getProducts({ featured: 'true', limit: 1 }),
         ])
         setStats({
-          products: productsRes.data.pagination?.total || productsRes.data.products?.length || 0,
+          products: productsRes.data.pagination?.total || 0,
           categories: categoriesRes.data.categories?.length || 0,
           inquiries: inquiriesRes.data.pagination?.total || 0,
-          featured: productsRes.data.products?.filter((p) => p.featured).length || 0,
+          featured: featuredRes.data.pagination?.total || 0,
         })
       } catch (error) {
         console.error('Error fetching stats:', error)
         // Fallback without inquiries
         try {
-          const [productsRes, categoriesRes] = await Promise.all([
+          const [productsRes, categoriesRes, featuredRes] = await Promise.all([
             getProducts({ limit: 100, all: true }),
             getCategories({ all: true }),
+            getProducts({ featured: 'true', limit: 1 }),
           ])
           setStats({
-            products: productsRes.data.pagination?.total || productsRes.data.products?.length || 0,
+            products: productsRes.data.pagination?.total || 0,
             categories: categoriesRes.data.categories?.length || 0,
             inquiries: 0,
-            featured: productsRes.data.products?.filter((p) => p.featured).length || 0,
+            featured: featuredRes.data.pagination?.total || 0,
           })
         } catch (err) {
           console.error('Fallback stats error:', err)

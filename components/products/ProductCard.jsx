@@ -5,9 +5,11 @@ import Link from 'next/link'
 import { MessageCircle } from 'lucide-react'
 import { formatPrice } from '@/utils/formatPrice'
 import { WHATSAPP_BASE } from '@/utils/constants'
+import { useSettingsStore } from '@/store/settingsStore'
 
 export default function ProductCard({ product }) {
-  const whatsappNumber = '919876543210'
+  const { settings } = useSettingsStore()
+  const whatsappNumber = settings?.whatsapp?.replace(/\D/g, '') || '919876543210'
   const message = encodeURIComponent(`Interested in ${product.name}`)
   const whatsappLink = `${WHATSAPP_BASE}${whatsappNumber}?text=${message}`
 

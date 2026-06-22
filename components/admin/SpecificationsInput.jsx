@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/Button'
 
 export default function SpecificationsInput({ value = [], onChange }) {
   const handleAdd = () => {
-    onChange([...value, { key: '', value: '' }])
+    onChange([...value, { key: '', value: '', _key: crypto.randomUUID() }])
   }
 
   const handleChange = (index, field, val) => {
@@ -20,7 +20,7 @@ export default function SpecificationsInput({ value = [], onChange }) {
   return (
     <div className="space-y-3">
       {value.map((spec, index) => (
-        <div key={index} className="flex gap-2">
+        <div key={spec._key || `spec_${index}`} className="flex gap-2">
           <Input placeholder="Key" value={spec.key} onChange={(e) => handleChange(index, 'key', e.target.value)} className="flex-1" />
           <Input placeholder="Value" value={spec.value} onChange={(e) => handleChange(index, 'value', e.target.value)} className="flex-1" />
           <button type="button" onClick={() => handleRemove(index)} className="p-2 text-red-500 hover:bg-red-50 rounded">

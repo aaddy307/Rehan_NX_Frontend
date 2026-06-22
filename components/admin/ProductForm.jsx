@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/Button'
 import { Switch } from '@/components/ui/Switch'
 import SpecificationsInput from './SpecificationsInput'
 import { useCategories } from '@/hooks/useCategories'
-import { createProduct, updateProduct, getProduct, getBrands } from '@/services/api'
+import { createProduct, updateProduct, getProductById, getBrands } from '@/services/api'
 import { toast } from 'sonner'
 import { generateSlug } from '@/lib/utils'
 import { X, Upload } from 'lucide-react'
@@ -55,7 +55,7 @@ export default function ProductForm({ productId }) {
     if (productId) {
       const fetchProduct = async () => {
         try {
-          const response = await getProduct(productId, { all: true })
+          const response = await getProductById(productId)
           const product = response.data.product
           setFormData({
             name: product.name,
@@ -129,7 +129,7 @@ export default function ProductForm({ productId }) {
         }
       }
 
-      data.append('existingImages', JSON.stringify(existingImages.map(img => img.publicId)))
+      data.append('existingImages', JSON.stringify(existingImages.filter(img => img && img.publicId).map(img => img.publicId)))
 
       if (productId) {
         await updateProduct(productId, data)

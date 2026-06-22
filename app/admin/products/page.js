@@ -1,6 +1,7 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
+import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
 import { getProducts, deleteProduct } from '@/services/api'
@@ -14,10 +15,12 @@ import { toast } from 'sonner'
 import { formatPrice } from '@/utils/formatPrice'
 
 export default function ProductsPage() {
+  const router = useRouter()
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
   const [deleteId, setDeleteId] = useState(null)
+  const debounceRef = useRef(null)
 
   useEffect(() => {
     fetchProducts()
@@ -36,8 +39,12 @@ export default function ProductsPage() {
   }
 
   const handleSearch = (e) => {
-    setSearch(e.target.value)
-    fetchProducts(e.target.value)
+    const value = e.target.value
+    setSearch(value)
+    if (debounceRef.current) clearTimeout(debounceRef.current)
+    debounceRef.current = setTimeout(() => {
+      fetchProducts(value)
+    }, 300)
   }
 
   const handleDelete = async () => {
@@ -80,7 +87,7 @@ export default function ProductsPage() {
         {loading ? (
           <LoadingSkeleton type="table" rows={5} />
         ) : (
-          <DataTable columns={columns} data={products} onEdit={(row) => window.location.href = `/admin/products/edit/${row._id}`} onDelete={(row) => setDeleteId(row._id)} />
+          <DataTable columns={columns} data={products} onEdit={(row) => router.push(`/admin/products/edit/${row._id}`)} onDelete={(row) => setDeleteId(row._id)} />
         )}
       </div>
 

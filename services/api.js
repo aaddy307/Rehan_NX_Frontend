@@ -11,6 +11,7 @@ export const getMe = () => api.get('/auth/me')
 
 export const getProducts = (params) => api.get('/products', { params })
 export const getProduct = (slug, params) => api.get(`/products/${slug}`, { params })
+export const getProductById = (id, params) => api.get(`/products/id/${id}`, { params })
 export const createProduct = (data) => api.post('/products', data)
 export const updateProduct = (id, data) => api.put(`/products/${id}`, data)
 export const deleteProduct = (id) => api.delete(`/products/${id}`)

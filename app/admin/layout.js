@@ -11,44 +11,34 @@ export default function AdminLayout({ children }) {
   const pathname = usePathname()
   const { isAuthenticated, isLoading, checkAuth } = useAuthStore()
   const [authChecked, setAuthChecked] = useState(false)
-  const [initialCheckDone, setInitialCheckDone] = useState(false)
 
   useEffect(() => {
     const initAuth = async () => {
-      setAuthChecked(false)
       await checkAuth()
       setAuthChecked(true)
-      setInitialCheckDone(true)
     }
     initAuth()
   }, [checkAuth])
 
   useEffect(() => {
-    if (initialCheckDone && authChecked) {
-      if (!isAuthenticated && pathname !== '/admin/login') {
-        router.push('/admin/login')
-      }
-    }
-  }, [initialCheckDone, authChecked, isAuthenticated, pathname, router])
-
-  if (pathname === '/admin/login') {
-    if (initialCheckDone && isAuthenticated) {
+    if (!authChecked) return
+    if (pathname === '/admin/login' && isAuthenticated) {
       router.push('/admin/dashboard')
-      return (
-        <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-          <LoadingSkeleton type="card" rows={1} />
-        </div>
-      )
+    } else if (pathname !== '/admin/login' && !isAuthenticated) {
+      router.push('/admin/login')
     }
-    return children
-  }
+  }, [authChecked, isAuthenticated, pathname, router])
 
-  if (!initialCheckDone || !authChecked) {
+  if (!authChecked || isLoading) {
     return (
       <div className="min-h-screen bg-gray-100 flex items-center justify-center">
         <LoadingSkeleton type="card" rows={1} />
       </div>
     )
+  }
+
+  if (pathname === '/admin/login') {
+    return children
   }
 
   if (!isAuthenticated) {

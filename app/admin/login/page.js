@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuthStore } from '@/store/authStore'
 import { Input } from '@/components/ui/Input'
@@ -10,20 +10,10 @@ import { toast } from 'sonner'
 
 export default function LoginPage() {
   const router = useRouter()
-  const { login, checkAuth, isAuthenticated, isLoading } = useAuthStore()
+  const { login } = useAuthStore()
   const [loading, setLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const [formData, setFormData] = useState({ email: '', password: '' })
-
-  useEffect(() => {
-    checkAuth()
-  }, [checkAuth])
-
-  useEffect(() => {
-    if (!isLoading && isAuthenticated) {
-      router.push('/admin/dashboard')
-    }
-  }, [isAuthenticated, isLoading, router])
 
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
@@ -33,12 +23,18 @@ export default function LoginPage() {
     e.preventDefault()
     setLoading(true)
 
-    const result = await login(formData)
-    if (!result.success) {
-      toast.error(result.message)
+    try {
+      const result = await login(formData)
+      if (result.success) {
+        router.push('/admin/dashboard')
+      } else {
+        toast.error(result.message)
+      }
+    } catch (error) {
+      toast.error('An unexpected error occurred')
+    } finally {
       setLoading(false)
     }
-    // Note: login() in store handles redirect via window.location.href
   }
 
   return (

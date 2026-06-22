@@ -13,6 +13,7 @@ import { formatPrice } from '@/utils/formatPrice'
 import { WHATSAPP_BASE } from '@/utils/constants'
 import { useSettingsStore } from '@/store/settingsStore'
 import { getProduct, getProducts } from '@/services/api'
+import { toast } from 'sonner'
 import { MessageCircle, ArrowLeft } from 'lucide-react'
 
 export default function ProductDetailPage() {
@@ -32,12 +33,13 @@ export default function ProductDetailPage() {
         const productRes = await getProduct(params.slug)
         setProduct(productRes.data.product)
 
-        if (productRes.data.product.category) {
-          const relatedRes = await getProducts({ category: productRes.data.product.category.slug, limit: 4 })
+        const cat = productRes.data.product.category
+        if (cat && typeof cat === 'object' && cat.slug) {
+          const relatedRes = await getProducts({ category: cat.slug, limit: 4 })
           setRelatedProducts(relatedRes.data.products.filter((p) => p._id !== productRes.data.product._id))
         }
       } catch (error) {
-        console.error('Error fetching product:', error)
+        toast.error('Failed to load product')
       } finally {
         setLoading(false)
       }
