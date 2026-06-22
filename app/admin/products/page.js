@@ -52,7 +52,7 @@ export default function ProductsPage() {
   }
 
   const columns = [
-    { key: 'image', label: 'Image', render: (val) => val?.[0] ? <Image src={val[0].url} alt="" width={50} height={50} className="w-12 h-12 object-cover rounded" /> : <div className="w-12 h-12 bg-gray-200 rounded" /> },
+    { key: 'images', label: 'Image', render: (val) => val?.[0]?.url ? <Image src={val[0].url} alt="" width={50} height={50} className="w-12 h-12 object-cover rounded" /> : <div className="w-12 h-12 bg-gray-200 rounded" /> },
     { key: 'name', label: 'Name' },
     { key: 'category', label: 'Category', render: (val) => typeof val === 'object' ? val?.name : 'N/A' },
     { key: 'brand', label: 'Brand', render: (val) => typeof val === 'object' ? val?.name : val || 'N/A' },
