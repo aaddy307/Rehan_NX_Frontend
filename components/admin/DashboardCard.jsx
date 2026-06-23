@@ -7,12 +7,14 @@ export default function DashboardCard({ icon: Icon, count, label, color = 'accen
   }
 
   return (
-    <div className="bg-white rounded-xl p-6 shadow-sm">
-      <div className={`w-12 h-12 rounded-lg flex items-center justify-center mb-4 ${colors[color]}`}>
-        <Icon className="w-6 h-6" />
+    <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 h-full flex flex-col justify-between">
+      <div>
+        <div className={`w-12 h-12 rounded-lg flex items-center justify-center mb-4 ${colors[color]}`}>
+          <Icon className="w-6 h-6" />
+        </div>
+        <p className="text-3xl font-extrabold text-primary mb-1">{count}</p>
       </div>
-      <p className="text-3xl font-bold text-primary mb-1">{count}</p>
-      <p className="text-gray-500">{label}</p>
+      <p className="text-gray-500 text-sm mt-2 font-medium">{label}</p>
     </div>
   )
 }

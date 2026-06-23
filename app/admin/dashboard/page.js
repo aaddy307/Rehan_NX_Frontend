@@ -134,16 +134,16 @@ export default function DashboardPage() {
         </div>
       ) : (
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="transition-all duration-300 hover:scale-[1.02]">
+          <div className="transition-all duration-300 hover:scale-[1.02] h-full">
             <DashboardCard icon={Package} count={stats.products} label="Total Products" color="primary" />
           </div>
-          <div className="transition-all duration-300 hover:scale-[1.02]">
+          <div className="transition-all duration-300 hover:scale-[1.02] h-full">
             <DashboardCard icon={Star} count={stats.featured} label="Featured Products" color="accent" />
           </div>
-          <div className="transition-all duration-300 hover:scale-[1.02]">
+          <div className="transition-all duration-300 hover:scale-[1.02] h-full">
             <DashboardCard icon={Layers} count={stats.categories} label="Categories" color="blue" />
           </div>
-          <div className="transition-all duration-300 hover:scale-[1.02]">
+          <div className="transition-all duration-300 hover:scale-[1.02] h-full">
             <DashboardCard icon={MessageSquare} count={stats.inquiries} label="Inquiries" color="green" />
           </div>
         </div>
