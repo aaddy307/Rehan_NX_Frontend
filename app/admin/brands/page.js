@@ -7,12 +7,14 @@ import BrandForm from '@/components/admin/BrandForm'
 import ConfirmDialog from '@/components/shared/ConfirmDialog'
 import LoadingSkeleton from '@/components/shared/LoadingSkeleton'
 import { Button } from '@/components/ui/Button'
-import { Plus, Edit, Trash2 } from 'lucide-react'
+import { Plus, Edit, Trash2, Search } from 'lucide-react'
+import { Input } from '@/components/ui/Input'
 import { toast } from 'sonner'
 
 export default function BrandsPage() {
   const [brands, setBrands] = useState([])
   const [loading, setLoading] = useState(true)
+  const [search, setSearch] = useState('')
   const [modalOpen, setModalOpen] = useState(false)
   const [editBrand, setEditBrand] = useState(null)
   const [deleteId, setDeleteId] = useState(null)
@@ -25,7 +27,7 @@ export default function BrandsPage() {
     try {
       setLoading(true)
       const response = await getBrands()
-      setBrands(response.data.brands)
+      setBrands(response.data.brands || [])
     } catch (error) {
       toast.error('Failed to load brands')
     } finally {
@@ -50,18 +52,39 @@ export default function BrandsPage() {
     fetchBrands()
   }
 
+  const filteredBrands = brands.filter((brand) =>
+    brand.name.toLowerCase().includes(search.toLowerCase())
+  )
+
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
         <h1 className="text-2xl font-bold text-primary">Brands</h1>
-        <Button onClick={() => { setEditBrand(null); setModalOpen(true) }}><Plus className="w-4 h-4 mr-2" /> Add Brand</Button>
+        <Button onClick={() => { setEditBrand(null); setModalOpen(true) }}>
+          <Plus className="w-4 h-4 mr-2" /> Add Brand
+        </Button>
+      </div>
+
+      {/* Search Box */}
+      <div className="mb-6 max-w-md bg-white p-3 rounded-xl border border-gray-100 shadow-sm">
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+          <Input
+            placeholder="Search brands by name..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="pl-10 w-full"
+          />
+        </div>
       </div>
 
       <div className="bg-white rounded-xl shadow-sm overflow-hidden">
         {loading ? (
           <LoadingSkeleton type="table" rows={5} />
-        ) : brands.length === 0 ? (
-          <div className="p-8 text-center text-gray-500">No brands yet. Add your first brand!</div>
+        ) : filteredBrands.length === 0 ? (
+          <div className="p-8 text-center text-gray-500">
+            {search ? 'No matching brands found.' : 'No brands yet. Add your first brand!'}
+          </div>
         ) : (
           <table className="w-full table-fixed">
             <thead>
@@ -72,7 +95,7 @@ export default function BrandsPage() {
               </tr>
             </thead>
             <tbody>
-              {brands.map((brand) => (
+              {filteredBrands.map((brand) => (
                 <tr key={brand._id} className="border-b hover:bg-gray-50">
                   <td className="py-3 px-3 sm:px-4 font-medium truncate">{brand.name}</td>
                   <td className="py-3 px-3 sm:px-4">
