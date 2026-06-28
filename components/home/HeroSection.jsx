@@ -1,7 +1,6 @@
 'use client'
 
 import Link from 'next/link'
-import { MessageCircle, ArrowRight } from 'lucide-react'
 import { useSettingsStore } from '@/store/settingsStore'
 
 export default function HeroSection() {
@@ -9,73 +8,63 @@ export default function HeroSection() {
   const whatsappNumber = settings?.whatsapp?.replace(/\D/g, '') || '919876543210'
 
   return (
-    <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-[#1a1a2e] pt-16 lg:pt-20">
-      {/* Animated Gradient Background */}
-      <div className="absolute inset-0">
-        <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-[#e94560]/15 rounded-full blur-[150px] animate-pulse" />
-        <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-purple-500/10 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: '1s' }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-blue-500/5 rounded-full blur-[100px]" />
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(233,69,96,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(233,69,96,0.03)_1px,transparent_1px)] bg-[size:60px_60px]" />
-      </div>
-
-      {/* Content */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 relative z-10 text-center py-20">
-        {/* Badge */}
-        <div className="inline-flex items-center gap-2 bg-[#e94560]/10 border border-[#e94560]/30 rounded-full px-5 py-2 mb-8">
-          <span className="w-2 h-2 bg-[#e94560] rounded-full animate-pulse" />
-          <span className="text-[#e94560] text-sm font-medium">New Arrivals Every Week</span>
-        </div>
-
-        {/* Main Headline */}
-        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
-          Latest Smartphones<br />
-          <span className="text-[#e94560]">at Best Prices</span>
-        </h1>
-
-        {/* Subtext */}
-        <p className="text-gray-400 text-lg mb-10 flex flex-wrap items-center justify-center gap-3">
-          <span className="flex items-center gap-2">
-            <span className="w-2 h-2 bg-[#e94560] rounded-full" /> EMI Available
-          </span>
-          <span className="text-gray-600">|</span>
-          <span className="flex items-center gap-2">
-            <span className="w-2 h-2 bg-[#e94560] rounded-full" /> Easy Finance
-          </span>
-          <span className="text-gray-600">|</span>
-          <span className="flex items-center gap-2">
-            <span className="w-2 h-2 bg-[#e94560] rounded-full" /> All Top Brands
-          </span>
-        </p>
-
-        {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link href="/products" className="group inline-flex items-center justify-center gap-2 bg-[#e94560] text-white px-10 py-4 rounded-xl font-semibold hover:bg-[#d63d55] transition-all duration-300 hover:scale-105 shadow-lg shadow-[#e94560]/30">
-            View Products
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-          </Link>
-          <a href={`https://wa.me/${whatsappNumber}`} target="_blank" rel="noopener noreferrer" className="group inline-flex items-center justify-center gap-2 bg-green-600 text-white px-10 py-4 rounded-xl font-semibold hover:bg-green-700 transition-all duration-300 hover:scale-105 shadow-lg shadow-green-600/30">
-            <MessageCircle className="w-5 h-5" />
-            WhatsApp Us
-          </a>
-        </div>
-
-        {/* Trust Indicators */}
-        <div className="mt-16 flex flex-wrap justify-center gap-10">
-          {[
-            { label: 'Happy Customers', num: '10K+' },
-            { label: 'Products', num: '500+' },
-            { label: 'Brands', num: '50+' },
-          ].map((item, i) => (
-            <div key={i} className="text-center">
-              <p className="text-3xl font-bold text-[#e94560]">{item.num}</p>
-              <p className="text-sm text-gray-500 mt-1">{item.label}</p>
+    <>
+      <section className="relative bg-white overflow-hidden md:h-screen flex items-center pt-24 md:pt-0" id="home">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-0 flex flex-col md:flex-row items-center relative z-10 w-full">
+          {/* Left Column (Text & CTAs) */}
+          <div className="md:w-3/5 text-center md:text-left relative z-10 pr-0 md:pr-8">
+            <h1 className="font-headline font-extrabold text-5xl sm:text-6xl lg:text-7xl leading-tight mb-6 tracking-tight text-onSurface">
+              Latest <span className="text-onBackground">Smartphones</span><br />
+              <span className="text-primaryContainer">at Best Prices</span>
+            </h1>
+            <p className="font-sans text-mutedText text-base lg:text-lg mb-10 max-w-xl leading-relaxed">
+              Experience the cutting edge of mobile technology. From flagship powerhouses to budget-friendly essentials, we bring the world's best brands to your pocket.
+            </p>
+            <div className="flex flex-wrap justify-center md:justify-start gap-4">
+              <Link href="/products" className="px-10 py-4 bg-primaryContainer text-white rounded-full font-headline font-bold text-sm uppercase tracking-wider shadow-lg hover:shadow-primaryContainer/35 transition-all hover:-translate-y-0.5 active:scale-95">
+                Shop Now
+              </Link>
+              <Link href="#brands" className="px-10 py-4 border-2 border-outline text-onSurface rounded-full font-headline font-bold text-sm uppercase tracking-wider hover:bg-background transition-all hover:-translate-y-0.5 active:scale-95">
+                View Brands
+              </Link>
             </div>
-          ))}
+          </div>
+
+          {/* Right Column (Pedestal Phone Image) */}
+          <div className="md:w-2/5 mt-12 md:mt-0 relative z-10 w-full">
+            <div className="relative w-full aspect-square max-w-md mx-auto border-8 border-white rounded-3xl shadow-xl overflow-hidden">
+              <img 
+                className="w-full h-full object-cover scale-100" 
+                alt="Premium smartphone showcase on pedestal" 
+                src="/HeroBannerPhone.jpg"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Diagonal Red Background Block - Direct Child of Section */}
+        <div className="hidden md:block absolute right-0 top-0 bottom-0 w-2/5 bg-primaryContainer geometric-shape z-0"></div>
+      </section>
+
+      {/* Bottom Stats Strip - Rendered outside the Hero section to avoid clipping */}
+      <div className="bg-primaryContainer text-white py-10 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-around items-center gap-8 text-center">
+          <div className="flex flex-col">
+            <span className="font-headline font-extrabold text-4xl sm:text-5xl leading-none">10K+</span>
+            <span className="font-headline font-bold text-[10px] uppercase tracking-wider opacity-90 mt-2 block">Happy Customers</span>
+          </div>
+          <div className="w-px h-12 bg-white opacity-20 hidden md:block"></div>
+          <div className="flex flex-col">
+            <span className="font-headline font-extrabold text-4xl sm:text-5xl leading-none">500+</span>
+            <span className="font-headline font-bold text-[10px] uppercase tracking-wider opacity-90 mt-2 block">Products</span>
+          </div>
+          <div className="w-px h-12 bg-white opacity-20 hidden md:block"></div>
+          <div className="flex flex-col">
+            <span className="font-headline font-extrabold text-4xl sm:text-5xl leading-none">50+</span>
+            <span className="font-headline font-bold text-[10px] uppercase tracking-wider opacity-90 mt-2 block">Brands</span>
+          </div>
         </div>
       </div>
-
-      {/* Bottom Fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#1a1a2e] to-transparent" />
-    </section>
+    </>
   )
 }

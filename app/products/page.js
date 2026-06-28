@@ -35,7 +35,7 @@ function ProductsContent() {
   useEffect(() => {
     const fetchProducts = async () => {
       setLoading(true)
-      const params = {}
+      const params = { limit: 8 }
       if (searchParams.get('category')) params.category = searchParams.get('category')
       if (searchParams.get('brand')) params.brand = searchParams.get('brand')
       if (searchParams.get('featured')) params.featured = searchParams.get('featured')
@@ -60,8 +60,8 @@ function ProductsContent() {
 
   return (
     <>
-      <div className="lg:hidden mb-4">
-        <Button variant="outline" onClick={() => setShowFilters(!showFilters)} className="w-full justify-center">
+      <div className="lg:hidden mb-6">
+        <Button variant="outline" onClick={() => setShowFilters(!showFilters)} className="w-full justify-center rounded-full border-2 border-outline-variant/60 font-headline font-bold text-xs uppercase tracking-wider">
           <Filter className="w-4 h-4 mr-2" />
           {showFilters ? 'Hide Filters' : 'Show Filters'}
         </Button>
@@ -69,10 +69,10 @@ function ProductsContent() {
 
       <div className="flex flex-col lg:flex-row gap-8">
         <aside className={`lg:w-60 flex-shrink-0 ${showFilters ? 'block' : 'hidden lg:block'}`}>
-          <div className="bg-white rounded-xl p-4 shadow-sm sticky top-24">
+          <div className="bg-white rounded-2xl p-5 shadow-soft border border-outline-variant/30 sticky top-24">
             <div className="flex items-center justify-between mb-4 lg:hidden">
-              <h3 className="font-semibold">Filters</h3>
-              <button onClick={() => setShowFilters(false)}><X className="w-5 h-5" /></button>
+              <h3 className="font-headline font-bold text-onSurface">Filters</h3>
+              <button onClick={() => setShowFilters(false)} className="text-onSurface"><X className="w-5 h-5" /></button>
             </div>
             <ProductFilters />
           </div>
@@ -82,7 +82,7 @@ function ProductsContent() {
           {loading ? (
             <LoadingSkeleton type="card" rows={8} />
           ) : error ? (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+            <div className="bg-red-50 border border-red-200 text-red-700 px-6 py-4 rounded-full text-center text-sm font-headline font-bold">
               Failed to load products. Please try again later.
             </div>
           ) : (
@@ -90,12 +90,16 @@ function ProductsContent() {
           )}
 
           {pagination && pagination.pages > 1 && (
-            <div className="flex justify-center gap-2 mt-8">
+            <div className="flex justify-center gap-2 mt-10">
               {Array.from({ length: pagination.pages }, (_, i) => i + 1).map((page) => (
                 <button
                   key={page}
                   onClick={() => handlePageChange(page)}
-                  className={`w-10 h-10 rounded-lg ${page === pagination.page ? 'bg-accent text-white' : 'bg-white text-gray-700 hover:bg-gray-100'}`}
+                  className={`w-10 h-10 rounded-full font-headline font-bold text-xs transition-all ${
+                    page === pagination.page 
+                      ? 'bg-primaryContainer text-white shadow-md shadow-primaryContainer/15' 
+                      : 'bg-white text-onSurface border border-outline-variant/50 hover:bg-background hover:border-primaryContainer/45'
+                  }`}
                 >
                   {page}
                 </button>
@@ -110,12 +114,12 @@ function ProductsContent() {
 
 export default function ProductsPage() {
   return (
-    <main className="min-h-screen bg-gray-50">
+    <main className="min-h-screen bg-background">
       <Navbar />
-      <div className="pt-24 pb-16 px-4 sm:px-6 lg:px-8">
+      <div className="pt-28 pb-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <h1 className="text-2xl md:text-3xl font-bold text-primary mb-2">Our Products</h1>
-          <p className="text-gray-500 mb-8">Browse our collection of latest smartphones</p>
+          <h1 className="text-3xl font-extrabold text-onSurface font-headline tracking-tight mb-2">Our Products</h1>
+          <p className="text-mutedText mb-10 font-sans text-sm">Browse our collection of latest smartphones</p>
           <Suspense fallback={<LoadingSkeleton type="card" rows={8} />}>
             <ProductsContent />
           </Suspense>

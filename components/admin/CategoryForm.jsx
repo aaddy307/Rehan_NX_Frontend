@@ -56,10 +56,7 @@ export default function CategoryForm({ category, onSuccess }) {
         <label className="block text-sm font-medium text-gray-700 mb-1">Name *</label>
         <Input name="name" value={formData.name} onChange={handleChange} required placeholder="Category name" />
       </div>
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">Slug</label>
-        <Input name="slug" value={formData.slug} onChange={handleChange} placeholder="auto-generated" />
-      </div>
+
       <div className="flex items-center gap-2">
         <Switch checked={formData.status} onCheckedChange={(val) => setFormData((prev) => ({ ...prev, status: val }))} />
         <span className="text-sm text-gray-700">Active</span>

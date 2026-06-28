@@ -1,8 +1,9 @@
-import { Inter } from 'next/font/google'
+import { Inter, Plus_Jakarta_Sans } from 'next/font/google'
 import './globals.css'
 import { Toaster } from 'sonner'
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
+const headline = Plus_Jakarta_Sans({ subsets: ['latin'], variable: '--font-headline' })
 
 export const metadata = {
   title: {
@@ -15,10 +16,10 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
+    <html lang="en" className={`${inter.variable} ${headline.variable}`}>
+      <body className={`${inter.className} bg-background text-onSurface`}>
         {children}
-        <Toaster position="top-right" toastOptions={{ style: { background: '#1a1a2e', color: '#fff' } }} />
+        <Toaster position="top-right" toastOptions={{ style: { background: '#ffffff', color: '#1a1c1d', border: '1px solid #e9bcb7' } }} />
       </body>
     </html>
   )

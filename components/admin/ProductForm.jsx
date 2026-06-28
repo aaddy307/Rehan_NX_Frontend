@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
-import Image from 'next/image'
 import { Input } from '@/components/ui/Input'
 import { Textarea } from '@/components/ui/Textarea'
 import { Select } from '@/components/ui/Select'
@@ -157,10 +156,7 @@ export default function ProductForm({ productId }) {
           <label className="block text-sm font-medium text-gray-700 mb-1">Name *</label>
           <Input name="name" value={formData.name} onChange={handleChange} required placeholder="Product name" />
         </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Slug</label>
-          <Input name="slug" value={formData.slug} onChange={handleChange} placeholder="auto-generated" />
-        </div>
+
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Brand *</label>
           <Select name="brand" value={formData.brand} onChange={handleChange} required>
